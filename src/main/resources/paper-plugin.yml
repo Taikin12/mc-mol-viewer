@@ -1,0 +1,11 @@
+name: McMolView
+version: '${version}'
+main: dev.taikin.mcplugins.mcmolview.McMolViewPlugin
+api-version: '1.21'
+authors: [ taikin ]
+description: Displays molecular structures from MDL MOL files.
+
+permissions:
+  mcmolview.use:
+    description: Use molecular structure viewer commands
+    default: op

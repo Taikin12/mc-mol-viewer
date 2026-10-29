@@ -1,0 +1,9 @@
+sources:
+  - molecules
+
+max-atoms: 1000
+atom-scale: 1.0
+blocks-per-angstrom: 2.0
+placement-distance: 6.0
+show-atom-labels: false
+show-bonds: true

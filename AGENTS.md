@@ -20,6 +20,14 @@ Wands are created with `dev.taikin.miviewer.common.WandItems`:
 
 See `../AGENTS.md` for the full workspace contract and common-first rules.
 
+## CI and releases
+
+- `.github/workflows/build.yml` builds on push/PR; `release.yml` runs on `v*`
+  tags and attaches the shaded JAR to a GitHub Release.
+- Both workflows check out the private `common` submodule with the
+  `MIVIEWER_COMMON_TOKEN` repo secret (PAT with read access to
+  `Taikin12/mc-miviewer-common`), falling back to `github.token`.
+
 ## Server testing and deployment
 
 - Backend `mc-backend` on host `mc` (`192.168.100.13`) is the test target.

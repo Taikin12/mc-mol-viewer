@@ -223,7 +223,7 @@ def build_item_definition(model: str) -> dict:
     return {
         "model": {
             "type": "minecraft:model",
-            "model": f"miviewer:item/{model}",
+            "model": f"mcmolview:item/{model}",
             "tints": [
                 {
                     "type": "minecraft:dye",

@@ -9,6 +9,7 @@ import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+LEGACY_NAMESPACE = "mcmolview"
 OUTPUT = ROOT.parent / "build" / "mcmolview-resourcepack.zip"
 RESOLUTION = 9
 PACK_FORMAT = 97
@@ -202,19 +203,19 @@ def build_wand_texture(handle: tuple[int, int, int], gem: tuple[int, int, int],
     )
 
 
-def build_simple_item_definition(model: str) -> dict:
+def build_simple_item_definition(namespace: str, model: str) -> dict:
     return {
         "model": {
             "type": "minecraft:model",
-            "model": f"miviewer:item/{model}",
+            "model": f"{namespace}:item/{model}",
         }
     }
 
 
-def build_generated_model(texture: str) -> dict:
+def build_generated_model(namespace: str, texture: str) -> dict:
     return {
         "parent": "minecraft:item/generated",
-        "textures": {"layer0": f"miviewer:item/{texture}"},
+        "textures": {"layer0": f"{namespace}:item/{texture}"},
     }
 
 
@@ -267,13 +268,15 @@ def main() -> None:
             "assets/mcmolview/models/item/sphere.json": json.dumps(sphere_model, indent=2) + "\n",
             "assets/mcmolview/models/item/stick.json": json.dumps(stick_model, indent=2) + "\n",
             **{
-                f"assets/miviewer/items/{name}.json": json.dumps(
-                    build_simple_item_definition(name), indent=2) + "\n"
+                f"assets/{namespace}/items/{name}.json": json.dumps(
+                    build_simple_item_definition(namespace, name), indent=2) + "\n"
+                for namespace in ("miviewer", LEGACY_NAMESPACE)
                 for name in wand_textures
             },
             **{
-                f"assets/miviewer/models/item/{name}.json": json.dumps(
-                    build_generated_model(name), indent=2) + "\n"
+                f"assets/{namespace}/models/item/{name}.json": json.dumps(
+                    build_generated_model(namespace, name), indent=2) + "\n"
+                for namespace in ("miviewer", LEGACY_NAMESPACE)
                 for name in wand_textures
             },
         }
@@ -285,10 +288,11 @@ def main() -> None:
         texture_dir.mkdir(parents=True, exist_ok=True)
         (texture_dir / "sphere.png").write_bytes(build_texture())
         (texture_dir / "stick.png").write_bytes(build_stick_texture())
-        wand_texture_dir = root / "assets/miviewer/textures/item"
-        wand_texture_dir.mkdir(parents=True, exist_ok=True)
-        for name, png in wand_textures.items():
-            (wand_texture_dir / f"{name}.png").write_bytes(png)
+        for namespace in ("miviewer", LEGACY_NAMESPACE):
+            wand_texture_dir = root / f"assets/{namespace}/textures/item"
+            wand_texture_dir.mkdir(parents=True, exist_ok=True)
+            for name, png in wand_textures.items():
+                (wand_texture_dir / f"{name}.png").write_bytes(png)
 
         with zipfile.ZipFile(OUTPUT, "w", zipfile.ZIP_DEFLATED) as archive:
             for path in sorted(root.rglob("*")):

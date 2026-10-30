@@ -3,9 +3,15 @@ version: '${version}'
 main: dev.taikin.mcplugins.mcmolview.McMolViewPlugin
 api-version: '1.21'
 authors: [ taikin ]
-description: Displays molecular structures from MDL MOL files.
+description: Displays molecular structures from XYZ, MOL/SDF, and ORCA output.
 
 permissions:
   mcmolview.use:
     description: Use molecular structure viewer commands
+    default: op
+  mcmolview.admin:
+    description: Manage all molecular models
+    default: op
+  mcmolview.edit.shared:
+    description: Edit models shared by their owner
     default: op

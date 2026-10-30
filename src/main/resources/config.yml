@@ -1,9 +1,20 @@
 sources:
   - molecules
 
-max-atoms: 1000
-atom-scale: 1.0
+scan-depth: 4
 blocks-per-angstrom: 2.0
+atom-scale: 1.0
+max-atoms: 1000
+max-models: 8
 placement-distance: 6.0
+show-info: true
 show-atom-labels: false
 show-bonds: true
+bond-width: 0.08
+render-mode: sphere
+sphere-shadow: true
+
+# atom-colors:
+#   C: "#303030"
+#   O: "#ff0000"
+# default-atom-color: "#cccccc"

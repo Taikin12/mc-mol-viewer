@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "dev.taikin.mcplugins"
-version = "0.1.0-SNAPSHOT"
+version = providers.gradleProperty("version").orElse("0.1.0-SNAPSHOT").get()
 
 repositories {
     mavenCentral()
@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+    implementation("dev.taikin.miviewer:mc-miviewer-common:0.1.0-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:26.2.build.129-stable")
     testImplementation("io.papermc.paper:paper-api:26.2.build.129-stable")
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
